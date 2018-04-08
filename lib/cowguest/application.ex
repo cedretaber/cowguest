@@ -14,7 +14,7 @@ defmodule Cowguest.Application do
 
     opts = [strategy: :one_for_one, name: Cowguest.Supervisor]
 
-    IO.puts "Server start on localhost:4000."
+    IO.puts("Server start on localhost:4000.")
 
     Supervisor.start_link(children, opts)
   end

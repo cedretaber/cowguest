@@ -3,8 +3,7 @@ defmodule Cowguest.Controllers.Hello do
 
   import Plug.Conn
 
-  def init(opts),
-    do: opts
+  def init(opts), do: opts
 
   def call(conn, _opts),
     do:
@@ -14,26 +13,26 @@ defmodule Cowguest.Controllers.Hello do
 
   defp make_body(conn),
     do: """
-        <html>
-          <head>
-            <meta charset="utf-8">
-            <title>Cowboy Hello!</title>
-          </head>
-          <body>
-            <h1>Cowboy Hello!!</h1>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Host</th>
-                  <td>#{conn.host}</td>
-                </tr>
-                <tr>
-                  <th>Method</th>
-                  <td>#{conn.method}</td>
-                </tr>
-              </tbody>
-            </table>
-          </body>
-        </html>
-"""
+            <html>
+              <head>
+                <meta charset="utf-8">
+                <title>Cowboy Hello!</title>
+              </head>
+              <body>
+                <h1>Cowboy Hello!!</h1>
+                <table>
+                  <tbody>
+                    <tr>
+                      <th>Host</th>
+                      <td>#{conn.host}</td>
+                    </tr>
+                    <tr>
+                      <th>Method</th>
+                      <td>#{conn.method}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </body>
+            </html>
+    """
 end
