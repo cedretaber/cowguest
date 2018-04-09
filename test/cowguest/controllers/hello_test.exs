@@ -8,11 +8,11 @@ defmodule Cowguest.Controllers.HelloTest do
 
   test "正しくウェブページを返すこと" do
     ret =
-      conn(:get, "/")
+      conn(:get, "/api/test")
       |> put_req_header("content-type", "application/json")
       |> Hello.call({})
 
     assert ret.status == 200
-    assert Regex.match?(~r/Cowboy Hello!!/, ret.resp_body)
+    assert ret.resp_body == "Hello, world!"
   end
 end

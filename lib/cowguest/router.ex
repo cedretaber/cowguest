@@ -7,7 +7,16 @@ defmodule Cowguest.Router do
   plug :match
   plug :dispatch
 
-  get "/", to: Cowguest.Controllers.Hello
+  get "/api/text", to: Cowguest.Controllers.Hello
+
+  get "/", do: send_file(conn, 200, "priv/static/html/index.html")
+  get "/index.html", do: send_file(conn, 200, "priv/static/html/index.html")
+
+
+  plug Plug.Static,
+    at: "/public",
+    from: "priv/static",
+    only: ~w(js css)
 
   match _, do: send_resp(conn, 404, "404 Not Found")
 end
