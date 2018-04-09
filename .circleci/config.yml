@@ -8,6 +8,8 @@ jobs:
     working_directory: ~/cowguest
     steps:
       - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
       - restore_cache:
           keys:
             - cowguest-{{ checksum "mix.lock" }}
