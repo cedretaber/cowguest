@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/elixir:latest
+    environment:
+      MIX_ENV=test
+    working_directory: ~/cowguest
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - cowguest-{{ checksum "mix.lock" }}
+      - run: mix deps.get
+      - run: mix format --check-formatted
+      - run: mix test
+      - run: mix dialyzer --halt-exit-status
+      - save_cache:
+          key: cowguest-{{ checksum "mix.lock" }}
+          paths:
+            - _build
+            - deps
+            - ~/.mix

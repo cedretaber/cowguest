@@ -23,7 +23,8 @@ defmodule Cowguest.MixProject do
   defp deps do
     [
       {:cowboy, "~> 2.3"},
-      {:plug, "~> 1.0"}
+      {:plug, "~> 1.0"},
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]
   end
 end
