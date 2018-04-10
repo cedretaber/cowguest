@@ -12,7 +12,6 @@ defmodule Cowguest.Router do
   get "/", do: send_file(conn, 200, "priv/static/html/index.html")
   get "/index.html", do: send_file(conn, 200, "priv/static/html/index.html")
 
-
   plug Plug.Static,
     at: "/public",
     from: "priv/static",
