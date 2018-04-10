@@ -25,6 +25,8 @@ cowguest-*.tar
 .idea
 cowguest.iml
 
+/priv/static/js/Index.js
+
 front/build/
 front/lib/
 front/node_modules/
