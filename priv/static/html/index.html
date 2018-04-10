@@ -1,25 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>Cowboy Hello!</title>
+    <title>Cowguest</title>
 </head>
 <body>
-<h1>Cowboy Hello!!</h1>
-<div class="source-text" />
+    <div id="guest_book"></div>
+    <script src="/js/Index.js"></script>
 </body>
-<script>
-async function main() {
-  const req = new Request("/api/text")
-  const init = {
-    method: "GET"
-  }
-  const ret = await fetch(req, init)
-  const text = await ret.text()
-
-  const target = document.querySelector(".source-text")
-  target.innerText = text
-}
-
-main()
-</script>
 </html>

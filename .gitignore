@@ -24,3 +24,12 @@ cowguest-*.tar
 
 .idea
 cowguest.iml
+
+front/build/
+front/lib/
+front/node_modules/
+front/.merlin
+front/.bsb.lock
+front/npm-debug.log
+
+front/src/*.bs.js
