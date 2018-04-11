@@ -10,6 +10,7 @@
     post: :*,
     put: :*,
     patch: :*,
-    delete: :*
+    delete: :*,
+    forward: :*
   ]
 ]

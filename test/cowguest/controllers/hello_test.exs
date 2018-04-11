@@ -6,11 +6,11 @@ defmodule Cowguest.Controllers.HelloTest do
 
   alias Cowguest.Controllers.Hello
 
-  test "正しくウェブページを返すこと" do
+  test "正しくテキストを返すこと" do
     ret =
-      conn(:get, "/api/test")
+      conn(:get, "/api/posts/")
       |> put_req_header("content-type", "application/json")
-      |> Hello.call({})
+      |> Hello.call(nil)
 
     assert ret.status == 200
     assert ret.resp_body == "Hello, world!"

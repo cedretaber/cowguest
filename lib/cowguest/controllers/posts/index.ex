@@ -15,8 +15,14 @@ defmodule Cowguest.Controllers.Posts.Index do
   ]
 
   def call(conn, _opts) do
+    posts =
+      case Poison.encode(%{posts: @posts}) do
+        {:ok, posts} -> posts
+        _ -> []
+      end
+
     conn
     |> put_resp_content_type("application/json")
-    |> send_resp(200, Poison.Encoder.encode(%{posts: @posts}, []))
+    |> send_resp(200, posts)
   end
 end

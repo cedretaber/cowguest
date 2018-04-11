@@ -18,11 +18,13 @@ defmodule Cowguest.Router do
   defmodule StaticRouter do
     use Plug.Builder
     plug Plug.Logger
+
     plug Plug.Static,
-         at: "/",
-         from: :cowguest,
-         only: ~w(js css images favicon.ico robots.txt)
+      at: "/",
+      from: :cowguest,
+      only: ~w(js css images favicon.ico robots.txt)
   end
+
   forward "/public", to: StaticRouter
 
   defmodule APIRoute do
@@ -34,6 +36,7 @@ defmodule Cowguest.Router do
 
     match _, do: send_resp(conn, 404, "No API.")
   end
+
   forward "/api", to: APIRoute
 
   get _, do: send_file(conn, 200, "priv/static/html/index.html")
