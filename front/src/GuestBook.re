@@ -29,9 +29,6 @@ type action
   | SuccessPost(post)
   | HttpError;
 
-let component =
-  ReasonReact.reducerComponent("GuestBook");
-
 let reducer =
   (action, { input: { text, name } as input, posts } as state) =>
     switch (action) {
@@ -53,7 +50,10 @@ let reducer =
                   |> (posts => self.send(SuccessPostList(posts)))
                   |> resolve
               )
-              |> catch(_err => resolve(self.send(HttpError)))
+              |> catch(err => {
+                Js.log(err);
+                resolve(self.send(HttpError));
+              })
               |> ignore
             )
         );
@@ -72,21 +72,30 @@ let reducer =
               |> then_(_res => resolve(self.send(SuccessPost(input))))
               |> catch(_err => resolve(self.send(HttpError)))
               |> ignore
-            )
+            );
           }
         );
     | SuccessPost(post) =>
         ReasonReact.Update({ input, posts: [post, ...posts] });
-    | HttpError =>
+    | HttpError => {
+        Js.log("Http error.");
         ReasonReact.Update(state); /* TODO: Error handle. */
+      }
     };
+
+let initialState = () => { input: { text: "", name: "" }, posts: [] };
+
+let component =
+  ReasonReact.reducerComponent("GuestBook");
 
 let make = (_children) => {
   ...component,
   reducer,
-  initialState:
-    () => { input: { text: "", name: "" }, posts: [] },
-
+  initialState,
+  didMount: self => {
+    self.send(FetchPostList);
+    ReasonReact.NoUpdate;
+  },
   render: ({state, send}) => {
     let {input, posts} = state;
     let get_value = event => ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;

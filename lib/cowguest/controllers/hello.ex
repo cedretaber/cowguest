@@ -1,7 +1,7 @@
 defmodule Cowguest.Controllers.Hello do
   @moduledoc false
 
-  import Plug.Conn
+  use Cowguest.Controller
 
   def init(opts), do: opts
 

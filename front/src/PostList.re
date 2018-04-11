@@ -13,8 +13,8 @@ let componens = ReasonReact.statelessComponent("PostList");
 let make = (~posts, _children) => {
   ...componens,
   render: _self => {
-    let postList = List.map(
-      ({text, name}) => <Post text=text name=name />,
+    let postList = List.mapi(
+      (idx, ({text, name})) => <Post key=string_of_int(idx) text=text name=name />,
       posts
     ) |> Array.of_list;
     <ul className="post-list"> (ReasonReact.arrayToElement(postList)) </ul>

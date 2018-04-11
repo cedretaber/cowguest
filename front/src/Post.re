@@ -5,7 +5,7 @@ let make = (~text, ~name, _children) => {
   ...component,
   render: _self =>
     <li className="post-element">
-      <span>(ReasonReact.stringToElement(text))</span>
-      <span>(ReasonReact.stringToElement(name))</span>
+      <span className="text">(ReasonReact.stringToElement(text))</span>
+      <span className="name">(ReasonReact.stringToElement(name))</span>
     </li>
 }
