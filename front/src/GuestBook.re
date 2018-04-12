@@ -65,10 +65,18 @@ let reducer =
           self => {
             let { text, name } = state.input;
             let payload = Js.Dict.empty();
-            Js.Dict.set(payload, "text", text);
-            Js.Dict.set(payload, "name", name);
+            Js.Dict.set(payload, "text", Js.Json.string(text));
+            Js.Dict.set(payload, "name", Js.Json.string(name));
+            let body =
+              Fetch.BodyInit.make(Js.Json.stringify(Js.Json.object_(payload)));
+            let init =
+              Fetch.RequestInit.make(
+                ~method_=Post,
+                ~body=body,
+                ()
+              );
             Js.Promise.(
-              Fetch.fetchWithInit("/api/posts", Fetch.RequestInit.make(~method_=Post, ()))
+              Fetch.fetchWithInit("/api/posts", init)
               |> then_(_res => resolve(self.send(SuccessPost(input))))
               |> catch(_err => resolve(self.send(HttpError)))
               |> ignore
@@ -100,20 +108,40 @@ let make = (_children) => {
     let {input, posts} = state;
     let get_value = event => ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value;
     <div>
-      <form>
-        <div>
-          <input _type="text" value=input.text onChange=(e => send(InputText(get_value(e)))) />
+      <div className="uk-navbar-container">
+        <div className="uk-navbar-left">
+          <div className="uk-navbar-item uk-logo uk-margin-left">
+            (ReasonReact.stringToElement("Cowguest"))
+          </div>
         </div>
-        <div>
-          <input _type="text" value=input.name onChange=(e => send(InputName(get_value(e)))) />
-        </div>
-        <div>
-          <button onClick=(_e => send(CllickPost))>
-            (ReasonReact.stringToElement("Post!"))
-          </button>
-        </div>
-      </form>
-      <PostList posts=posts />
+      </div>
+      <div className="uk-container">
+        <form className="uk-margin-top">
+          <fieldset className="uk-fieldset">
+            <div className="uk-margin">
+              <input className="uk-input"
+                    _type="text"
+                    value=input.text
+                    placeholder="Name"
+                    onChange=(e => send(InputText(get_value(e)))) />
+            </div>
+            <div className="uk-margin">
+              <input className="uk-input"
+                    _type="text"
+                    value=input.name
+                    placeholder="Comment"
+                    onChange=(e => send(InputName(get_value(e)))) />
+            </div>
+          </fieldset>
+          <div>
+            <button _type="button" className="uk-button uk-button-primary" onClick=(_e => send(CllickPost))>
+              (ReasonReact.stringToElement("Post!"))
+            </button>
+          </div>
+        </form>
+        <hr className="uk-divider-icon" />
+        <PostList posts=posts />
+      </div>
     </div>
   }
 };

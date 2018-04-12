@@ -17,6 +17,6 @@ let make = (~posts, _children) => {
       (idx, ({text, name})) => <Post key=string_of_int(idx) text=text name=name />,
       posts
     ) |> Array.of_list;
-    <ul className="post-list"> (ReasonReact.arrayToElement(postList)) </ul>
+    <ul className="uk-list uk-list-striped post-list"> (ReasonReact.arrayToElement(postList)) </ul>
   }
 };

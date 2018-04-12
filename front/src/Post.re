@@ -5,7 +5,15 @@ let make = (~text, ~name, _children) => {
   ...component,
   render: _self =>
     <li className="post-element">
-      <span className="text">(ReasonReact.stringToElement(text))</span>
-      <span className="name">(ReasonReact.stringToElement(name))</span>
+      <div className="uk-grid">
+        <div className="text uk-width-5-6@m">
+          <span className="uk-margin-right">
+            (ReasonReact.stringToElement(text))
+          </span>
+        </div>
+        <div className="name uk-width-1-6@m">
+          (ReasonReact.stringToElement(name))
+        </div>
+      </div>
     </li>
 }
