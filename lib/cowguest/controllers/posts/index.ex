@@ -16,7 +16,7 @@ defmodule Cowguest.Controllers.Posts.Index do
 
   def call(conn, _opts) do
     posts =
-      case Poison.encode(%{posts: @posts}) do
+      case to_json(%{posts: @posts}) do
         {:ok, posts} -> posts
         _ -> []
       end

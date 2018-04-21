@@ -14,7 +14,7 @@ defmodule Cowguest.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :cowboy, :plug],
+      extra_applications: [:logger, :cowboy, :plug, :redix],
       mod: {Cowguest.Application, []}
     ]
   end
@@ -25,6 +25,7 @@ defmodule Cowguest.MixProject do
       {:cowboy, "~> 2.3"},
       {:plug, "~> 1.0"},
       {:poison, "~> 3.1"},
+      {:redix, ">= 0.0.0"},
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false}
     ]
   end

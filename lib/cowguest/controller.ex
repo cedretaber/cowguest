@@ -8,4 +8,8 @@ defmodule Cowguest.Controller do
       use Plug.Builder, unquote(opts)
     end
   end
+
+  def to_json(value) do
+    Poison.encode(value)
+  end
 end

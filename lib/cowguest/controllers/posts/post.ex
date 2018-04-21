@@ -3,13 +3,17 @@ defmodule Cowguest.Controllers.Posts.Post do
 
   use Cowguest.Controller
 
-  alias Cowguest.Models.Post
-
   def init(opts), do: opts
 
-  def call(conn, _opts),
-    do:
-      conn
-      |> put_resp_content_type("application/json")
-      |> send_resp(200, Poison.encode!(%{id: 1}))
+  def call(conn, _opts) do
+    case to_json(%{id: 1}) do
+      {:ok, body} ->
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(200, body)
+      _ ->
+        conn
+        |> send_resp(500, "500 Internal Server Error")
+    end
+  end
 end
