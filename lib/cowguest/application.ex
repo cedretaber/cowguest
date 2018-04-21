@@ -4,7 +4,6 @@ defmodule Cowguest.Application do
   use Application
 
   def start(_type, _args) do
-
     redis_host = Application.get_env(:redix, :host)
     redis_port = Application.get_env(:redix, :port)
     redis_database = Application.get_env(:redix, :database)

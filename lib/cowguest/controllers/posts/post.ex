@@ -11,6 +11,7 @@ defmodule Cowguest.Controllers.Posts.Post do
         conn
         |> put_resp_content_type("application/json")
         |> send_resp(200, body)
+
       _ ->
         conn
         |> send_resp(500, "500 Internal Server Error")
