@@ -16,7 +16,8 @@ jobs:
             - cowguest-{{ checksum "mix.lock" }}
       - run: mix deps.get
       - run: mix format --check-formatted
-      - run: mix test
+      - run: mix coveralls.json
+      - run: bash <(curl -s https://codecov.io/bash)
       - run: mix dialyzer --halt-exit-status
       - save_cache:
           key: cowguest-{{ checksum "mix.lock" }}
