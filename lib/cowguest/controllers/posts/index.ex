@@ -3,20 +3,13 @@ defmodule Cowguest.Controllers.Posts.Index do
 
   use Cowguest.Controller
 
-  alias Cowguest.Models.Post
+  alias Cowguest.Repo.Posts
 
   def init(opts), do: opts
 
-  @posts [
-    %Post{name: "anyone", text: "hogehoge"},
-    %Post{name: "someone", text: "fugafuga"},
-    %Post{name: "someone", text: "piyopiyo"},
-    %Post{name: "anyone", text: "日本語"}
-  ]
-
   def call(conn, _opts) do
     posts =
-      case to_json(%{posts: @posts}) do
+      case to_json(%{posts: Posts.all()}) do
         {:ok, posts} -> posts
         _ -> []
       end

@@ -11,6 +11,9 @@
     put: :*,
     patch: :*,
     delete: :*,
-    forward: :*
+    forward: :*,
+
+    # Test
+    on_exit: :*
   ]
 ]

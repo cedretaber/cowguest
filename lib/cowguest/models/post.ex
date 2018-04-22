@@ -3,5 +3,5 @@ defmodule Cowguest.Models.Post do
 
   @derive [Poison.Encoder]
 
-  defstruct [:text, :name]
+  defstruct [:id, :text, :name]
 end

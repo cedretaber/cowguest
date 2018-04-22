@@ -1,19 +1,12 @@
-defmodule Cowguest.Router.Generic do
-  defmacro __using__(opts) do
-    quote location: :keep do
-      use Plug.Router, unquote(opts)
-      plug Plug.Logger
-      plug :match
-      plug :dispatch
-    end
-  end
-end
-
 defmodule Cowguest.Router do
   @moduledoc false
 
-  use Cowguest.Router.Generic
+  use Plug.Router
   use Plug.Debugger, otp_app: :cowguest
+
+  plug Plug.Logger
+  plug :match
+  plug :dispatch
 
   defmodule StaticRouter do
     use Plug.Builder
@@ -28,9 +21,16 @@ defmodule Cowguest.Router do
   forward "/public", to: StaticRouter
 
   defmodule APIRoute do
-    use Cowguest.Router.Generic
+    use Plug.Router
 
-    get "/text", to: Cowguest.Controllers.Hello
+    plug Plug.Parsers,
+      parsers: [:json],
+      pass: ["application/json"],
+      json_decoder: Poison
+
+    plug :match
+    plug :dispatch
+
     get "/posts", to: Cowguest.Controllers.Posts.Index
     post "/posts", to: Cowguest.Controllers.Posts.Post
 

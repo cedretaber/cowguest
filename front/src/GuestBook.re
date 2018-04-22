@@ -29,7 +29,7 @@ type action
   | SuccessPost(post)
   | HttpError;
 
-let reducer =
+let rec reducer =
   (action, { input: { text, name } as input, posts } as state) =>
     switch (action) {
     | InputText(newText) =>
@@ -69,10 +69,15 @@ let reducer =
             Js.Dict.set(payload, "name", Js.Json.string(name));
             let body =
               Fetch.BodyInit.make(Js.Json.stringify(Js.Json.object_(payload)));
+            let headers =
+              Fetch.HeadersInit.make({
+                "Content-Type": "application/json"
+              });
             let init =
               Fetch.RequestInit.make(
-                ~method_=Post,
-                ~body=body,
+                ~method_ = Post,
+                ~body = body,
+                ~headers = headers,
                 ()
               );
             Js.Promise.(
@@ -83,8 +88,8 @@ let reducer =
             );
           }
         );
-    | SuccessPost(post) =>
-        ReasonReact.Update({ input, posts: [post, ...posts] });
+    | SuccessPost(_) =>
+        reducer(FetchPostList, state);
     | HttpError => {
         Js.log("Http error.");
         ReasonReact.Update(state); /* TODO: Error handle. */
@@ -121,16 +126,16 @@ let make = (_children) => {
             <div className="uk-margin">
               <input className="uk-input"
                     _type="text"
-                    value=input.text
+                    value=input.name
                     placeholder="Name"
-                    onChange=(e => send(InputText(get_value(e)))) />
+                    onChange=(e => send(InputName(get_value(e)))) />
             </div>
             <div className="uk-margin">
               <input className="uk-input"
                     _type="text"
-                    value=input.name
+                    value=input.text
                     placeholder="Comment"
-                    onChange=(e => send(InputName(get_value(e)))) />
+                    onChange=(e => send(InputText(get_value(e)))) />
             </div>
           </fieldset>
           <div>
