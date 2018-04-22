@@ -30,8 +30,8 @@ use Mix.Config
 #     import_config "#{Mix.env}.exs"
 
 config :redix,
-       host: System.get_env("REDIS_HOST") || "127.0.0.1",
-       port: System.get_env("REDIS_PORT") || 6379,
-       database: System.get_env("REDIS_DB") || 0
+  host: System.get_env("REDIS_HOST") || "127.0.0.1",
+  port: System.get_env("REDIS_PORT") || 6379,
+  database: System.get_env("REDIS_DB") || 0
 
 import_config "#{Mix.env()}.exs"
