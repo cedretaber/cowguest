@@ -1,6 +1,7 @@
 defmodule Cowguest.Repo.Posts do
   @moduledoc false
 
+  alias Cowguest.Repo
   alias Cowguest.Models.Post
 
   def all() do
@@ -19,19 +20,19 @@ defmodule Cowguest.Repo.Posts do
   def find_by_key(key) do
     id = key_to_num(key)
 
-    with {:ok, text} <- Redix.command(:redix, ["hget", key, "text"]),
-         {:ok, name} <- Redix.command(:redix, ["hget", key, "name"]) do
+    with {:ok, text} <- Repo.get(key, :text),
+         {:ok, name} <- Repo.get(key, :name) do
       %Post{id: id, text: text, name: name}
     else
       _ -> nil
     end
   end
 
-  def insert(post) do
+  def insert(%{text: text, name: name}) do
     case next_number() do
       {:ok, n} ->
         key = "post-#{n}"
-        Redix.command(:redix, ["hset", key, "text", post.text, "name", post.name])
+        Repo.put(key, text: text, name: name)
         {:ok, n}
 
       _ ->
@@ -56,7 +57,7 @@ defmodule Cowguest.Repo.Posts do
   end
 
   defp keys() do
-    Redix.command(:redix, ["keys", "post-*"])
+    Repo.keys("post-*")
   end
 
   defp key_to_num(key) do
